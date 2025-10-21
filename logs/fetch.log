@@ -1,0 +1,4 @@
+2025-10-18 01:51:03,513 - INFO - Début de la collecte des vols...
+2025-10-18 01:51:03,934 - WARNING - Aucun vol trouvé : {
+  "error": "Unsupported `en_US.UTF-8` interface language - hl parameter."
+}
