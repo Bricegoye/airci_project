@@ -16,7 +16,7 @@ from datetime import datetime
 # Configuration utilisateur
 # ------------------------
 API_KEY = "e5bd8b53e35e2c6ba927d5b127d834b83ee7eb07b1366bd7f66c249a481fa265"
-DATE_DEPART = "2025-12-22"
+DATE_DEPART = "2025-12-23"
 DATE_RETOUR = "2026-01-14"
 
 # ------------------------
