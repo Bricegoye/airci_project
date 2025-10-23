@@ -2,7 +2,7 @@
 """
 fetch_serapi_paris_abidjan_dec2025.py
 Recherche aller-retour Paris (CDG) → Abidjan (ABJ)
-Période : 23 décembre 2025 au 13 janvier 2026
+Période : 22 décembre 2025 au 14 janvier 2026
 """
 
 from serpapi import GoogleSearch
@@ -14,8 +14,8 @@ import json
 API_KEY = "e5bd8b53e35e2c6ba927d5b127d834b83ee7eb07b1366bd7f66c249a481fa265"
 
 # 🗓️ Période du voyage
-date_depart = "2025-12-23"
-date_retour = "2026-01-13"
+date_depart = "2025-12-22"
+date_retour = "2026-01-14"
 
 # 🧳 Paramètres de recherche
 params = {
