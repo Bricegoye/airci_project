@@ -11,11 +11,15 @@ import csv
 import os
 import json
 from datetime import datetime
+from dotenv import load_dotenv
+
 
 # ------------------------
-# Configuration utilisateur
+# Charger les variables d'environnement
 # ------------------------
-API_KEY = "e5bd8b53e35e2c6ba927d5b127d834b83ee7eb07b1366bd7f66c249a481fa265"
+load_dotenv()
+API_KEY = os.getenv("SERPAPI_KEY")
+
 DATE_DEPART = "2025-12-23"
 DATE_RETOUR = "2026-01-14"
 
