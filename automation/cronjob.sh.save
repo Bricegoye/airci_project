@@ -1,0 +1,10 @@
+#!/bin/bash
+/Users/bricegoye/Desktop/data/airci_project/.venv/bin/python /Users/bricegoye/Desktop/data/airci_project/fetch_serapi_daily.py
+source 
+/Users/bricegoye/Desktop/data/airci_project/.venv/bin/activate
+python /Users/bricegoye/Desktop/data/airci_project/fetch_serapi.py >> /Users/bricegoye/Desktop/data/airci_project/logs/cron.log 
+2>&1
+chmod +x automation/cronjob.sh
+
+/Users/bricegoye/Desktop/data/airci_project/.venv/bin/python /Users/bricegoye/Desktop/data/airci_project/fetch_serapi.py
+
