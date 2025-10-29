@@ -1,4 +1,4 @@
 # Ignorer les fichiers sensibles
 .env
 __pycache__/
-output/
+
