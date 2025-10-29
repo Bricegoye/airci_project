@@ -1,4 +1,6 @@
-echo "python-dotenv
+python-dotenv
 serpapi
 requests
-pandas" > requirements.txt
+streamlit
+pandas
+plotly

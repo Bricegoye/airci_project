@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 evol_price.py
-Évolution des prix des vols Paris (CDG) → Abidjan (ABJ)
-avec affichage des compagnies et des prix par jour
+Analyse de l'évolution des prix des vols Paris (CDG) → Abidjan (ABJ)
+Affiche la tendance du meilleur prix général et des compagnies aériennes
 """
 
 import os
@@ -10,60 +10,105 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# Dossier contenant les CSV
+# ------------------------------
+# Configuration
+# ------------------------------
 OUTPUT_DIR = "output"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Lister tous les fichiers CSV
+# Lister tous les fichiers CSV disponibles
 csv_files = sorted([f for f in os.listdir(OUTPUT_DIR) if f.endswith(".csv")])
+if not csv_files:
+    raise FileNotFoundError("Aucun fichier CSV trouvé dans le dossier 'output'.")
 
+print(f"🧾 {len(csv_files)} fichiers trouvés :")
+for f in csv_files:
+    print(f"  - {f}")
+
+# ------------------------------
+# Initialisation des structures
+# ------------------------------
 dates = []
 best_prices = []
-company_prices = {}  # dictionnaire : key=compagnie, value=liste des prix par jour
+company_prices = {}
 
+# ------------------------------
+# Lecture et agrégation
+# ------------------------------
 for file in csv_files:
-    df = pd.read_csv(os.path.join(OUTPUT_DIR, file))
-    if not df.empty:
-        # Date du jour (depuis le nom du fichier)
-        parts = file.split("_")
-        date_str = parts[3]
+    path = os.path.join(OUTPUT_DIR, file)
+    df = pd.read_csv(path)
+
+    if df.empty:
+        continue
+
+    # Extraire la date de collecte depuis le nom du fichier
+    date_str = file.replace(".csv", "").split("_")[-1]
+    try:
         date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-        dates.append(date_obj)
+    except ValueError:
+        print(f"⚠️ Nom de fichier inattendu : {file}")
+        continue
 
-        # Prix minimum du jour
-        min_price = df['price'].min()
-        best_prices.append(min_price)
+    # Nettoyer les prix
+    df["price"] = (
+        df["price"].astype(str)
+        .str.replace("[^0-9]", "", regex=True)
+        .astype(float)
+    )
 
-        # Parcourir toutes les compagnies et leurs prix
-        for idx, row in df.iterrows():
-            airline = row['airline']
-            price = row['price']
-            if airline not in company_prices:
-                company_prices[airline] = []
-            company_prices[airline].append((date_obj, price))
+    # Enregistrer la date
+    dates.append(date_obj)
 
-# Afficher résumé par compagnie
-print("\n💡 Résumé des prix par compagnie :")
-for airline, price_list in company_prices.items():
-    prices_str = ", ".join([f"{p[1]}€" for p in price_list])
-    print(f"{airline}: {prices_str}")
+    # Prix minimum du jour
+    best_prices.append(df["price"].min())
 
-# Tracer la courbe du meilleur prix général
-plt.figure(figsize=(10,5))
-plt.plot(dates, best_prices, marker='o', linestyle='-', color='blue', label='Meilleur prix général')
+    # Prix par compagnie
+    for airline, group in df.groupby("airline"):
+        mean_price = group["price"].mean()
+        if airline not in company_prices:
+            company_prices[airline] = []
+        company_prices[airline].append((date_obj, mean_price))
 
-# Tracer la courbe par compagnie
-for airline, price_list in company_prices.items():
-    price_dates, prices = zip(*price_list)
-    plt.plot(price_dates, prices, marker='o', linestyle='--', label=airline)
+# ------------------------------
+# Afficher un résumé rapide
+# ------------------------------
+print("\n💡 Résumé des prix moyens par compagnie :")
+for airline, values in company_prices.items():
+    prices = [round(p[1], 2) for p in values]
+    print(f"  {airline}: {prices}")
 
-plt.title("Évolution des prix des vols Paris → Abidjan par compagnie")
-plt.xlabel("Date d'exécution du script")
+# ------------------------------
+# Tri des dates
+# ------------------------------
+dates, best_prices = zip(*sorted(zip(dates, best_prices)))
+
+# ------------------------------
+# Tracé du graphique
+# ------------------------------
+plt.figure(figsize=(12,6))
+
+# Courbe du meilleur prix global
+plt.plot(dates, best_prices, marker='o', linestyle='-', color='black', linewidth=2, label='Meilleur prix global')
+
+# Courbes des compagnies
+for airline, values in company_prices.items():
+    values_sorted = sorted(values, key=lambda x: x[0])
+    date_series, price_series = zip(*values_sorted)
+    plt.plot(date_series, price_series, marker='o', linestyle='--', label=airline)
+
+# Mise en forme
+plt.title("📉 Évolution des prix des vols Paris → Abidjan (par compagnie)")
+plt.xlabel("Date de collecte")
 plt.ylabel("Prix (€)")
-plt.grid(True)
+plt.grid(True, linestyle="--", alpha=0.6)
 plt.xticks(rotation=45)
-plt.legend()
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 plt.tight_layout()
 
-# Afficher et sauvegarder le graphique
+# Sauvegarde + affichage
+output_img = os.path.join(OUTPUT_DIR, "prix_paris_abidjan_compagnies.png")
+plt.savefig(output_img, dpi=150)
 plt.show()
-plt.savefig(os.path.join(OUTPUT_DIR, "prix_paris_abidjan_compagnies.png"))
+
+print(f"\n📊 Graphique enregistré dans : {output_img}")
