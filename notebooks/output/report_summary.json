@@ -1,0 +1,16 @@
+{
+  "nb_vols": 85,
+  "prix_moyen": 998.26,
+  "prix_min": 861.0,
+  "prix_max": 1614.0,
+  "compagnies": [
+    "Royal Air Maroc",
+    "Air Cote D'Ivoire",
+    "Air Senegal",
+    "Air France",
+    "Brussels Airlines",
+    "Ethiopian",
+    "Air Algerie"
+  ],
+  "date_maj": "2025-10-26 00:37"
+}
