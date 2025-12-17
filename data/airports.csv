@@ -1,0 +1,31 @@
+city,airport_name,iata,country
+Paris,Charles de Gaulle,CDG,France
+London,Heathrow,LHR,United Kingdom
+New York,John F. Kennedy International,JFK,United States
+Dubai,Dubai International,DXB,United Arab Emirates
+Amsterdam,Schiphol,AMS,Netherlands
+Frankfurt,Frankfurt Airport,FRA,Germany
+Madrid,Adolfo Suárez Madrid–Barajas,MAD,Spain
+Barcelona,El Prat,BCN,Spain
+Rome,Leonardo da Vinci–Fiumicino,FCO,Italy
+Milan,Malpensa,MXP,Italy
+Zurich,Zurich Airport,ZRH,Switzerland
+Brussels,Brussels Airport,BRU,Belgium
+Lisbon,Humberto Delgado,LIS,Portugal
+Vienna,Vienna International,VIE,Austria
+Munich,Franz Josef Strauss,MUC,Germany
+Copenhagen,Copenhagen Airport,CPH,Denmark
+Stockholm,Arlanda,ARN,Sweden
+Oslo,Gardermoen,OSL,Norway
+Helsinki,Helsinki Airport,HEL,Finland
+Istanbul,Istanbul Airport,IST,Turkey
+Casablanca,Mohammed V,CMN,Morocco
+Abidjan,Félix Houphouët-Boigny,ABJ,Ivory Coast
+Dakar,Blaise Diagne,DSS,Senegal
+Lagos,Murtala Muhammed,LOS,Nigeria
+Accra,Kotoka International,ACC,Ghana
+Nairobi,Jomo Kenyatta International,NBO,Kenya
+Johannesburg,O. R. Tambo International,JNB,South Africa
+Addis Ababa,Bole International,ADD,Ethiopia
+Doha,Hamad International,DOH,Qatar
+Toronto,Pearson International,YYZ,Canada
