@@ -1,4 +1,6 @@
-# Ignorer les fichiers sensibles
 .env
+output/
+analyse/
 __pycache__/
-
+*.pyc
+.DS_Store
